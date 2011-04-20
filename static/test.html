@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Test Invite Functionality</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Ryan Wilcox">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- Date: 2011-04-19 -->
+</head>
+<body>
+
+<h1>Welcome to the example of how to invite someone to your Rails server with JSONP</h1>
+
+<p>Try the form below. It should execute some Javascript!</p>
+
+<form id="test_form" action="invite_submit" method="get" accept-charset="utf-8">
+  
+<label for="type_something">Type something</label><input type="text" name="type_something" value="" id="type_something">
+
+<p><input type="submit" value="Try it"></p>
+</form>
+
+<div>
+  <h1>Result:</h1>
+  <span id="ajax_success"></span>
+  <span id="ajax_failure"></span>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $("#test_form").submit( function() {
+        $.ajax(
+          {   url:"http://localhost:3000/api.jsonp",
+              dataType: "jsonp",
+
+              success: function(data) {
+                $("#ajax_success").html("Success!");
+              },
+            
+              error: function(jqXHR, textStatus, errorThrown) {
+                $("#ajax_failure").html("Failure. " + textStatus + "<p>" + errorThrown);
+                console.log(jqXHR.responseText);
+                console.log( jqXHR.getAllResponseHeaders() );
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR);
+                
+              }
+        });
+      return false;
+    }
+    );
+  });
+  
+</script>
+
+</body>
+</html>
